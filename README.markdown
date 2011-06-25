@@ -20,8 +20,13 @@ Integrate inviting/referring friends.
 Configuration
 ------------
 
-1. Use FOSUserBundle.
-2. If you are using the Symfony2 vendors method, add this to your deps file:
+Use FOSUserBundle
+~~~~~~~~~~~~~~~~~
+
+Fully implement the FOSUserBundle...
+
+Add EvarioJanrainBundle to your vendor/bundles/ dir
+---------------------------------------------
 
 ::
 
@@ -31,7 +36,8 @@ Configuration
 
     Then run bin/vendors install
 
-3. Add the Evario namespace to your autoloader:
+Add the Evarop namespace to your autoloader
+-------------------------------------------
 
 ::
 
@@ -41,7 +47,8 @@ Configuration
         // your other namespaces
     );
 
-4. Add JanrainBundle to your application kernel
+Add JanrainBundle to your application kernel
+--------------------------------------------
 
 ::
 
@@ -58,8 +65,11 @@ Configuration
         );
     }
 
-5. Add janrainId string column to user table.
-6. Add the provider service:
+Add janrainId string column to user table
+-----------------------------------------
+
+Add the provider service
+------------------------
 
 ::
 
@@ -72,7 +82,8 @@ Configuration
                 apiKey: %evario_janrain.options.api_key%
                 container: "@service_container"
 
-7. Update your security.yml file to use the new user provider.
+Update your security.yml file to use the new user provider
+----------------------------------------------------------
 
 ::
 
@@ -95,7 +106,8 @@ Configuration
             logout:       true
             anonymous:    true
 
-8. Set the parameters in your config.yml file:
+Set the parameters in your config.yml file
+------------------------------------------
 
 ::
 
