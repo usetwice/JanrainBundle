@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 
-class JanrainExtension extends Extension
+class EvarioJanrainExtension extends Extension
 {
     protected $resources = array(
         'security' => 'security.xml',
@@ -23,7 +23,7 @@ class JanrainExtension extends Extension
         $configuration = new Configuration();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        foreach (array('app_id') as $attribute) {
+        foreach (array('api_key', 'request_url') as $attribute) {
             $container->setParameter('evario_janrain.'.$attribute, $config[$attribute]);
         }
     }

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class JanrainUserProvider implements UserProviderInterface
+class JanrainProvider implements UserProviderInterface
 {
     protected $userManager;
     protected $validator;

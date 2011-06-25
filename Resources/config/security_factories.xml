@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="evario_janrain.auth.factory" class="Limelight\JanrainBundle\DependencyInjection\Security\Factory\JanrainFactory" public="false">
+        <service id="evario_janrain.auth.factory" class="Evario\JanrainBundle\DependencyInjection\Security\Factory\EvarioJanrainFactory" public="false">
             <tag name="security.listener.factory" />
         </service>
     </services>
