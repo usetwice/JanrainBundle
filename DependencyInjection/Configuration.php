@@ -26,7 +26,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('app_id')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('request_url')->isRequired()->cannotBeEmpty()->end()
             ->end();
 
         return $treeBuilder;
