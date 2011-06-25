@@ -17,11 +17,13 @@ Make it work...
 Integrate social sharing.
 Integrate inviting/referring friends.
 
-Requirements
+Configuration
 ------------
 
 1. Use FOSUserBundle.
 2. If you are using the Symfony2 vendors method, add this to your deps file:
+
+::
 
     [EvarioJanrainBundle]
         git=git://github.com/evario/JanrainBundle.git
@@ -31,6 +33,8 @@ Requirements
 
 3. Add the Evario namespace to your autoloader:
 
+::
+
     // app/autoload.php
     $loader->registerNamespaces(array(
         'Evario' => __DIR__.'/../vendor/bundles',
@@ -38,6 +42,8 @@ Requirements
     );
 
 4. Add JanrainBundle to your application kernel
+
+::
 
     // app/AppKernel.php
     public function registerBundles()
@@ -55,6 +61,8 @@ Requirements
 5. Add janrainId string column to user table.
 6. Add the provider service:
 
+::
+
     services:
         evario.janrain.user:
             class: Evario\JanrainBundle\Security\User\Provider\JanrainProvider
@@ -65,6 +73,8 @@ Requirements
                 container: "@service_container"
 
 7. Update your security.yml file to use the new user provider.
+
+::
 
     factories:
         - "%kernel.root_dir%/../vendor/bundles/Evario/JanrainBundle/Resources/config/security_factories.xml"
@@ -86,6 +96,8 @@ Requirements
             anonymous:    true
 
 8. Set the parameters in your config.yml file:
+
+::
 
     # app/config/config.yml
     evario_janrain:
