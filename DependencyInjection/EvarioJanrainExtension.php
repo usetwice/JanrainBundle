@@ -24,7 +24,7 @@ class EvarioJanrainExtension extends Extension
         $config = $processor->processConfiguration($configuration, $configs);
 
         foreach (array('api_key', 'request_url') as $attribute) {
-            $container->setParameter('evario_janrain.'.$attribute, $config[$attribute]);
+            $container->setParameter('evario_janrain.options.'.$attribute, $config[$attribute]);
         }
     }
 

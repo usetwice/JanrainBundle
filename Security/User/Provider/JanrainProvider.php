@@ -13,14 +13,14 @@ class JanrainProvider implements UserProviderInterface
 {
     protected $userManager;
     protected $validator;
-    protected $options;
+    protected $apiKey;
     protected $container;
 
-    public function __construct($userManager, $validator, $options, $container)
+    public function __construct($userManager, $validator, $apiKey, $container)
     {
         $this->userManager = $userManager;
         $this->validator = $validator;
-        $this->options = new ParameterBag($options);
+        $this->apiKey = $apiKey;
         $this->container = $container;
     }
 
@@ -34,7 +34,7 @@ class JanrainProvider implements UserProviderInterface
         // TODO: Move apiKey to config file and reference it.
         /* STEP 1: Extract token POST parameter */
         $post_data = array('token'  => $token,
-                           'apiKey' => $this->options->get('api_key'),
+                           'apiKey' => $this->apiKey,
                            'format' => 'json');
 
         /* STEP 2: Use the token to make the auth_info API call */
