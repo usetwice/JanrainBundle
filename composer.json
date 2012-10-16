@@ -1,0 +1,21 @@
+{
+    "name": "rodgermd/janrain-bundle",
+    "description": "Integrates Janrain into Symfony. Fork of https://github.com/evario/JanrainBundle",
+    "keywords": ["security", "janrain", "authentication"],
+    "homepage": "https://github.com/rodgermd/JanrainBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Murashov",
+            "email": "rodger@ladela.com"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "Ladela\\Bundle\\JanrainBundle": "" }
+    },
+    "target-dir": "Ladela/Bundle/JanrainBundle"
+}
