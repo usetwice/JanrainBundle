@@ -15,7 +15,7 @@
         "symfony/framework-bundle": "2.1.*"
     },
     "autoload": {
-        "psr-0": { "Ladela\\Bundle\\JanrainBundle": "" }
+        "psr-0": { "Evario\\Bundle\\JanrainBundle": "" }
     },
-    "target-dir": "Ladela/Bundle/JanrainBundle"
+    "target-dir": "Evario/Bundle/JanrainBundle"
 }
