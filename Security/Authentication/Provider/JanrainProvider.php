@@ -33,9 +33,7 @@ class JanrainProvider implements AuthenticationProviderInterface
         }
 
         try {
-            if ($uid = $this->facebook->getUser()) {
-                return $this->createAuthenticatedToken($uid);
-            }
+          return $this->createAuthenticatedToken($token->getUser());
         } catch (AuthenticationException $failed) {
             throw $failed;
         } catch (\Exception $failed) {

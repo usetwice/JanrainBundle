@@ -12,7 +12,7 @@ class EvarioJanrainExtension extends Extension
 {
     protected $resources = array(
         'security' => 'security.xml',
-        'security' => 'security_factories.xml',
+        'factories' => 'security_factories.xml',
     );
 
     public function load(array $configs, ContainerBuilder $container)

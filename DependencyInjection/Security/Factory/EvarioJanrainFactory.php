@@ -11,6 +11,7 @@ class EvarioJanrainFactory extends AbstractFactory
 {
     public function __construct()
     {
+      $this->addOption('create_user_if_not_exists', false);
     }
 
     public function getPosition()
@@ -30,34 +31,32 @@ class EvarioJanrainFactory extends AbstractFactory
 
     protected function createAuthProvider(ContainerBuilder $container, $id, $config, $userProviderId)
     {
-        // with user provider
-        if (isset($config['provider'])) {
-            $authProviderId = 'evario_janrain.auth.'.$id;
+      $authProviderId = 'evario_janrain.auth.'.$id;
 
-            $container
-                ->setDefinition($authProviderId, new DefinitionDecorator('evario_janrain.auth'))
-                ->addArgument(new Reference($userProviderId))
-                ->addArgument(new Reference('security.user_checker'))
-            ;
+      $definition = $container
+        ->setDefinition($authProviderId, new DefinitionDecorator('evario_janrain.auth'));
 
-            return $authProviderId;
-        }
+      // with user provider
+      if (isset($config['provider'])) {
+        $definition
+          ->addArgument(new Reference($userProviderId))
+          ->addArgument(new Reference('security.user_checker'))
+          ->addArgument($config['create_user_if_not_exists'])
+        ;
+      }
 
-        // without user provider
-        return 'evario_janrain.auth';
+      return $authProviderId;
     }
 
     protected function createEntryPoint($container, $id, $config, $defaultEntryPointId)
     {
-        $entryPointId = 'evario_janrain.security.authentication.entry_point.'.$id;
-        $container
-            ->setDefinition($entryPointId, new DefinitionDecorator('evario_janrain.security.authentication.entry_point'))
-            ->replaceArgument(1, $config)
-        ;
+      $entryPointId = 'evario_janrain.security.authentication.entry_point.'.$id;
+      $container
+        ->setDefinition($entryPointId, new DefinitionDecorator('evario_janrain.security.authentication.entry_point'));
 
-        // set options to container for use by other classes
-        $container->setParameter('evario_janrain.options.'.$id, $config);
+      // set options to container for use by other classes
+      $container->setParameter('evario_janrain.options.'.$id, $config);
 
-        return $entryPointId;
+      return $entryPointId;
     }
 }
