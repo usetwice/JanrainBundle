@@ -94,7 +94,7 @@ class JanrainProvider implements UserProviderInterface
           $first_name = array_shift($name_parts);
           $last_name = implode(' ', $name_parts);
           if ($first_name) $user->setFirstName($first_name);
-          if ($last_name) $user->setLastName($first_name);
+          if ($last_name) $user->setLastName($last_name);
         }
 
         if (count($this->validator->validate($user))) {
