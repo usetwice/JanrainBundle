@@ -2,7 +2,10 @@
   if (typeof window.janrain !== 'object') window.janrain = {};
   if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
 
-  janrain.settings.tokenUrl = location.origin + Routing.generate('janrain.check');
+  janrain.settings.tokenUrl = "%protocol%//%host%/%url%"
+    .replace('%protocol%', location.protocol)
+    .replace('%host%', location.host)
+    .replace('%url%', Routing.generate('janrain.check'));
 
   function isReady() {
     janrain.ready = true;
