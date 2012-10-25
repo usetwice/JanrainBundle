@@ -5,7 +5,7 @@
   janrain.settings.tokenUrl = "%protocol%//%host%/%url%"
     .replace('%protocol%', location.protocol)
     .replace('%host%', location.host)
-    .replace('%url%', Routing.generate('janrain.check'));
+    .replace('%url%', Routing.generate('janrain.check').replace(/^\//, ''));
 
   function isReady() {
     janrain.ready = true;
