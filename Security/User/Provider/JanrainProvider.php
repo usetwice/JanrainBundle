@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class JanrainProvider implements UserProviderInterface
 {
   protected $userManager;
+  /** @var \Symfony\Component\Validator\Validator $validator */
   protected $validator;
   protected $apiKey;
   protected $container;
@@ -93,11 +94,17 @@ class JanrainProvider implements UserProviderInterface
           $name_parts = explode(' ', $profile['displayName']);
           $first_name = array_shift($name_parts);
           $last_name = implode(' ', $name_parts);
-          if ($first_name) $user->setFirstName($first_name);
-          if ($last_name) $user->setLastName($last_name);
+          $user->setFirstName($first_name);
+          $user->setLastName($last_name ?: $first_name);
         }
 
+        // check without validator groups
         if (count($this->validator->validate($user))) {
+          throw new UsernameNotFoundException('The social media user could not be stored');
+        }
+
+        // check using registration group
+        if (count($this->validator->validate($user, 'registration'))) {
           throw new UsernameNotFoundException('The social media user could not be stored');
         }
 
