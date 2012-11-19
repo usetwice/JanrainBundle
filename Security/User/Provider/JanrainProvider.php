@@ -72,41 +72,16 @@ class JanrainProvider implements UserProviderInterface
 
         /* STEP 3 Continued: Extract the 'identifier' from the response */
         $profile    = $auth_info['profile'];
-        $identifier = $profile['identifier'];
-        $email      = $profile['email'];
-        $primaryKey = isset($profile['primaryKey']) ? $profile['primaryKey'] : null;
 
-        // Retrieve by email
-        $user = $this->userManager->findUserBy(array('email' => $email));
+        // Retrieve by profile
+        $user = $this->retrieveUser($profile);
         if ($user) return $user;
 
         // If we still have not found a user, we need to create a new one.
         $user = $this->userManager->createUser();
-        $user->setEnabled(true);
-        $user->setPassword('');
+        $this->createProfile($user, $profile);
 
-        $username = strtolower(trim($profile['preferredUsername'], '_'));
-        $user->setUsername($username);
-        $user->setEmail($profile['email']);
-
-        if ($profile['displayName'])
-        {
-          $name_parts = explode(' ', $profile['displayName']);
-          $first_name = array_shift($name_parts);
-          $last_name = implode(' ', $name_parts);
-          $user->setFirstName($first_name);
-          $user->setLastName($last_name ?: $first_name);
-        }
-
-        // check without validator groups
-        if (count($this->validator->validate($user))) {
-          throw new UsernameNotFoundException('The social media user could not be stored');
-        }
-
-        // check using registration group
-        if (count($this->validator->validate($user, 'registration'))) {
-          throw new UsernameNotFoundException('The social media user could not be stored');
-        }
+        $this->validate($user);
 
         $this->userManager->updateUser($user);
       }
@@ -115,6 +90,56 @@ class JanrainProvider implements UserProviderInterface
     }
 
     throw new UsernameNotFoundException('The user is not authenticated.');
+  }
+
+  /**
+   * creates user profile based on got values
+   * @param \Symfony\Component\Security\Core\User\UserInterface $user
+   * @param array $profile
+   */
+  protected function createProfile(UserInterface $user, array $profile)
+  {
+    $user->setEnabled(true);
+    $user->setPassword('');
+
+    $username = strtolower(trim($profile['preferredUsername'], '_'));
+    $user->setUsername($username);
+    $user->setSocialIdentifier($profile['identifier']);
+
+
+    if (method_exists($user, 'setEmail') && @$profile['email']) $user->setEmail($profile['email']);
+
+    if ($profile['displayName'])
+    {
+      $name_parts = explode(' ', $profile['displayName']);
+      $first_name = array_shift($name_parts);
+      $last_name = implode(' ', $name_parts);
+      if (method_exists($user, 'setFirstName')) $user->setFirstName($first_name);
+      if (method_exists($user, 'setLastName')) $user->setLastName($last_name);
+    }
+  }
+
+  /**
+   * validates user
+   * @param \Symfony\Component\Security\Core\User\UserInterface $user
+   * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+   */
+  protected function validate(UserInterface $user)
+  {
+    // check without validator groups
+    if (count($this->validator->validate($user))) {
+      throw new UsernameNotFoundException('The social media user could not be stored');
+    }
+  }
+
+  /**
+   * Retrieves user by profile identifier
+   * @param array $profile
+   * @return UserInterface | null
+   */
+  public function retrieveUser(array $profile)
+  {
+    return $this->userManager->findUserBy(array('social_identifier' => $profile['identifier']));
   }
 
   public function loadUser(UserInterface $user)
@@ -126,8 +151,7 @@ class JanrainProvider implements UserProviderInterface
     return $this->loadUserByUsername($user->getId());
   }
 
-  public
-  function refreshUser(UserInterface $user)
+  public function refreshUser(UserInterface $user)
   {
     if (!$user instanceof UserInterface) {
       throw new UnsupportedUserException('Account is not supported.');
