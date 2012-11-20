@@ -109,14 +109,16 @@ class JanrainProvider implements UserProviderInterface
 
     if (method_exists($user, 'setEmail') && @$profile['email']) $user->setEmail($profile['email']);
 
-    if ($profile['displayName'])
+    // use givenName and familyName if provided
+    $name = @$profile['name'];
+    if (is_array($name))
     {
-      $name_parts = explode(' ', $profile['displayName']);
-      $first_name = array_shift($name_parts);
-      $last_name = implode(' ', $name_parts);
-      if (method_exists($user, 'setFirstName')) $user->setFirstName($first_name);
-      if (method_exists($user, 'setLastName')) $user->setLastName($last_name);
+      if (method_exists($user, 'setFirstName') && array_key_exists('givenName', $name) && $name['givenName']) $user->setFirstName($name['givenName']);
+      if (method_exists($user, 'setLastName') && array_key_exists('familyName', $name) && $name['familyName']) $user->setLastName($name['familyName']);
     }
+
+    // fill first name as displayName
+    if (method_exists($user, 'setFirstName') && !$user->getFirstName()) $user->setFirstName($profile['displayName']);
   }
 
   /**
