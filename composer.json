@@ -1,8 +1,8 @@
 {
-  "name":"rodgermd/janrain-bundle",
+  "name":"usetwice/janrain-bundle",
   "description":"Integrates Janrain into Symfony. Fork of https://github.com/evario/JanrainBundle",
   "keywords":["security", "janrain", "authentication"],
-  "homepage":"https://github.com/rodgermd/JanrainBundle",
+  "homepage":"https://github.com/usetwice/JanrainBundle",
   "type":"symfony-bundle",
   "license":"MIT",
   "authors":[
