@@ -13,7 +13,7 @@
   ],
   "require":{
     "symfony/framework-bundle":"2.1.*",
-    "friendsofsymfony/user-bundle":"*",
+    "friendsofsymfony/user-bundle":"dev-master",
     "friendsofsymfony/jsrouting-bundle":"*"
   },
   "autoload":{
