@@ -9,7 +9,10 @@ thisScriptTag = scripts[ scripts.length - 1 ];
 
   if (typeof window.janrain !== 'object') window.janrain = {};
   if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
-
+  
+  //an ugly workaround i think
+  Routing.setPrefix($('html').attr('lang') + '__RG__');
+  
   janrain.settings.tokenUrl = "%protocol%//%host%/%url%"
     .replace('%protocol%', location.protocol)
     .replace('%host%', location.host)
