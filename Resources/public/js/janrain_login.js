@@ -10,10 +10,11 @@ thisScriptTag = scripts[ scripts.length - 1 ];
   if (typeof window.janrain !== 'object') window.janrain = {};
   if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
   
+  var prefix = $('html').attr('lang') + '__RG__';
   janrain.settings.tokenUrl = "%protocol%//%host%/%url%"
     .replace('%protocol%', location.protocol)
     .replace('%host%', location.host)
-    .replace('%url%', Routing.generate('janrain.check').replace(/^\//, ''));
+    .replace('%url%', Routing.generate(prefix + 'janrain.check').replace(/^\//, ''));
 
   function isReady() {
     janrain.ready = true;
